@@ -14,7 +14,8 @@ class Buttonbar extends Form {
         this.b.push(new Button("SAVE","SAVE",x+dx++*(w+ddw),y,w,()=>{return !this.running()}));
         this.b.push(new Button("UNDO","UNDO",x+dx++*(w+ddw),y,w,()=>{return undoPtr>0 && !this.running()}));
         this.b.push(new Button("REDO","REDO",x+dx++*(w+ddw),y,w,()=>{return undoPtr<undo.length-1 && !this.running()}));
-    
+        
+
         x+=dx*(w+ddw)-w/2,w=50,x+=w/2+dw,dx=0;
         this.b.push(new Button("REWIND","m0",x+dx++*(w+ddw),y,w,()=>{return pn.mptr>0 && !this.running()}));
         this.b.push(new Button("STEP_BWD","STEP-",x+dx++*(w+ddw),y,w,()=>{return pn.mptr>0 && !this.running()}));
@@ -27,6 +28,9 @@ class Buttonbar extends Form {
         x+=dx*(w+ddw)-w/2,w=35,x+=w/2+dw,dx=0;
         this.b.push(new Button("PREF","PREF",x+dx++*(w+ddw),y,w,()=>{return !this.running()}));
         this.b.push(new Button("HELP","HELP",x+dx++*(w+ddw),y,w,()=>{return !this.running()}));
+        this.b.push(new Button("KEYS","KEYS",x+dx++*(w+ddw),y,w,()=>{return !this.running()}));
+    
+    
     }
     running() {
         return state.is("PLAY") || state.is("RUN") || state.is("FLY");

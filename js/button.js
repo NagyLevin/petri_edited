@@ -168,6 +168,8 @@ class Button extends Object {
             g.arc(cx, cy, radiusH, 0,2*Math.PI);
             g.fill("evenodd");
         }
+        
+
         if (this.label) this.label.draw();
     }
 
@@ -210,12 +212,18 @@ class Button extends Object {
             state.set("IDLE");
             pn.rewind();
         }
+        
         else if (this.button=="HELP") {
             window.open("doc/help.html", "_blank");
             //fb.active=false;
             //fh.visible=true;
             //fh.active=true;
         }
+        else if (this.button=="KEYS") {
+            
+            openDialogExternally();
+        }
+            
         else if (this.button=="PREF") {
             fb.active=false;
             fp.visible=true;
