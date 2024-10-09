@@ -7,8 +7,8 @@ function initDialog() {
 
     const dialogBox = document.getElementById('dialogBox');
     const dialogOverlay = document.getElementById('dialogOverlay');
-    const selectedItemDisplay = document.getElementById('selectedItem');
-
+    const closeBtn = document.getElementById('closeDialogBtn');
+   
     // Track the currently pressed button
     let currentPressedButton = null;
 
@@ -16,6 +16,7 @@ function initDialog() {
     function openDialog() {
         dialogBox.style.display = 'block';
         dialogOverlay.style.display = 'block';
+      
     }
 
     // Expose the openDialog function for external use
@@ -25,6 +26,7 @@ function initDialog() {
     function closeDialog() {
         dialogBox.style.display = 'none';
         dialogOverlay.style.display = 'none';
+        
     }
 
     // Function to handle button press
@@ -38,7 +40,7 @@ function initDialog() {
         button.style.backgroundColor = 'red'; // Make the pressed button red
         currentPressedButton = button; // Track the currently pressed button
 
-        selectedItemDisplay.textContent = `You selected: ${item}`;
+       
     }
 
     // Get the item buttons and add event listeners
@@ -52,8 +54,8 @@ function initDialog() {
     MWBtn.addEventListener('click', () => pressButton(MWBtn, 'MouseWheel'));
     DeleteBtn.addEventListener('click', () => pressButton(DeleteBtn, 'Delete'));
 
-    // Add event listener to the overlay to close the dialog when clicking outside
-    dialogOverlay.addEventListener('click', closeDialog);
+    // Add event listener to close the dialog when the X button is clicked
+    closeBtn.addEventListener('click', closeDialog);
 }
 
 // Function to create dialog elements dynamically
@@ -85,7 +87,18 @@ function createDialogElements() {
     dialogBox.style.padding = '20px';
     dialogBox.style.border = '2px solid black';
     dialogBox.style.zIndex = '1001';
+    dialogBox.style.pointerEvents = 'auto';  // Allow interaction with the dialog elements
     body.appendChild(dialogBox);
+
+    // Add a close button (small X) to the dialog box
+    const closeBtn = document.createElement('span');
+    closeBtn.id = 'closeDialogBtn';
+    closeBtn.textContent = 'X';
+    closeBtn.style.position = 'absolute';
+    closeBtn.style.top = '10px';
+    closeBtn.style.right = '10px';
+    closeBtn.style.cursor = 'pointer';
+    dialogBox.appendChild(closeBtn);
 
     // Add content to the dialog box (buttons for CTRL, ALT, MouseWheel, Delete)
     const CTRLBtn = document.createElement('button');
@@ -110,10 +123,7 @@ function createDialogElements() {
     dialogBox.appendChild(MWBtn);
     dialogBox.appendChild(DeleteBtn);
 
-    // Create paragraph to display the selected item
-    const selectedItemDisplay = document.createElement('p');
-    selectedItemDisplay.id = 'selectedItem';
-    body.appendChild(selectedItemDisplay);
+   
 }
 
 // Initialize the dialog functionality after the DOM is loaded
