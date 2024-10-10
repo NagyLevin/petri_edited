@@ -30,7 +30,7 @@ class MyEvent { // Data structure for an Event (mouse and keys)
         this.deltaY=this.undefined(e.deltaY);
         // only for key events so as to preserve SCA for mouse events
         if (this.type[0]=="k") {
-            this.sca=(e.shiftKey?"S":"s")+(e.ctrlKey?"C":"c")+(e.altKey?"A":"a"); //itt van az alt és a control
+            this.sca=(e.shiftKey?"S":"s")+(e.ctrlKey?"C":"c")+(e.altKey?"A":"a"); //itt van az alt és a control Ha nagy C akkor le van nyomva a ctrl
         }
         // only for mouse events so as to preserve coords for key events
         if (this.type[0]=="m") {

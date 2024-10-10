@@ -1,11 +1,23 @@
+
+//dialogwindow variables
+let DialogArrow = false;
+
 class BaseForm extends Form {
     constructor(title, x, y, w, h) {
         super("BASEFORM", title, x, y, w, h);
         this.visible = true;
         this.closable = false;
         this.paleArrow = null; // Potential new dashed Flow arrow
+
+        //dialogwindow variables
+        
     }
+    
     draw() {
+        
+
+
+
         // Title line
         g.standard(1);
         g.setupText("16px arial", "right", "middle");
@@ -84,6 +96,7 @@ class BaseForm extends Form {
                 // Sticky Flow heads
                 else if (evt.key == 's') {
                     // Toggle sticky Flow heads of this Transition
+                    
                     if (this.hovered && this.hovered.type == "TRANSITION") {
                         pn.f.forEach(f => {
                             if (f.o2 == this.hovered) {
@@ -93,15 +106,25 @@ class BaseForm extends Form {
                     }
                 }
             }
+
+            
+
             // Move to highlight Object
             else if (evt.type == "mm") {
+                
                 pn.highlighted = this.hovered;
+                   
             }
+            
+
             // New Object, Pan
             else if (this.leftClick(evt) && SCA(evt, "...") && 
                 !this.hovered) 
             {
-                state.set("LEFTDOWN");
+                if(!DialogArrow){ // dialogwindow
+                    state.set("LEFTDOWN");
+                }
+                
             }
             // Object click, Drag
             else if (this.leftClick(evt) && SCA(evt, "sc.") && 
@@ -120,7 +143,7 @@ class BaseForm extends Form {
                 state.set("SHIFTCLICK");
             }
             // New potential Flow drawarrow
-            else if (this.leftClick(evt) && SCA(evt, "sCa") && 
+            else if (  this.leftClick(evt)  && SCA(evt, "sCa")  && 
                 this.hovered &&
                 (this.hovered.type == "PLACE" ||
                 this.hovered.type == "TRANSITION")) 
@@ -128,6 +151,18 @@ class BaseForm extends Form {
                 this.paleArrow = null;
                 state.set("DRAWARROW");
             }
+            else if (DialogArrow&& this.hovered &&
+                (this.hovered.type == "PLACE" ||
+                this.hovered.type == "TRANSITION")) {
+                
+                    
+                    this.paleArrow = null;    
+                    state.set("DRAWARROW");
+                    
+            }
+
+
+
             // Multisegment Flow or Flow Toggle
             else if (this.leftClick(evt) && SCA(evt, "sca") && 
                 this.hovered.type == "FLOW" ) 
@@ -262,17 +297,20 @@ class BaseForm extends Form {
                 pn.newUndo();
                 state.set("IDLE");
             }
-            // Toggle Place <=> Transition
+            // Toggle Place <=> Transition 
             else if (evt.type == "mu" && this.hovered
                 && this.hovered == pn.highlighted
                 && closeEnough(this.mouseDownCoord, tcursor) &&
                 (this.hovered.type == "PLACE" ||
                 this.hovered.type == "TRANSITION") &&
-                pn.noFlowFromHere(this.hovered)) 
-            {
-                pn.togglePlaceTransition(this.hovered);
-                pn.newUndo();
-                state.set("IDLE");
+                pn.noFlowFromHere(this.hovered)) {
+
+                if(!DialogArrow){ //Dialogwindow
+                    pn.togglePlaceTransition(this.hovered);
+                    pn.newUndo();
+                    state.set("IDLE");
+                }    
+                
             }
             // New Label
             else if (evt.type == "mu" && SCA(evt, "scA") 

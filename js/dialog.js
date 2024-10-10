@@ -49,7 +49,18 @@ function initDialog() {
     const MWBtn = document.getElementById('selectMW');
     const DeleteBtn = document.getElementById('selectDelete');
 
-    CTRLBtn.addEventListener('click', () => pressButton(CTRLBtn, 'CTRL'));
+    // set draw mode to arrow draw
+    CTRLBtn.addEventListener('click', () => {
+        pressButton(CTRLBtn, 'CTRL');
+        if (typeof DialogArrow !== 'undefined') {
+            DialogArrow = true;  // Set DialogArrow to true in the other JS file
+            console.log('DialogArrow is set to:', DialogArrow);
+        } else {
+            console.error('DialogArrow is not defined!');
+        }
+    });
+
+   
     ALTBtn.addEventListener('click', () => pressButton(ALTBtn, 'ALT'));
     MWBtn.addEventListener('click', () => pressButton(MWBtn, 'MouseWheel'));
     DeleteBtn.addEventListener('click', () => pressButton(DeleteBtn, 'Delete'));
